@@ -214,7 +214,10 @@ function restartCurrentLine() {
     if (currentWordIndex > 0) {
         addButtonEffect("prevCharBtn"); // 仍使用原本的按鈕效果
 
-        // 刪除當前行的所有時間戳記
+        // **先找到該行第一個字的時間戳記**
+        let firstTimestamp = findFirstTimestampOfCurrentLine();
+
+        // **刪除當前行的所有時間戳記**
         timestamps = timestamps.filter(t => t.line !== currentLineIndex + 1);
 
         // 移除當前行所有字的 highlight 樣式
@@ -225,8 +228,37 @@ function restartCurrentLine() {
         // 重置索引，回到本行第一個字
         currentWordIndex = 0;
         updateTimestampsDisplay();
+
+        // **設定 YouTube 播放器時間為 該行第一個字的時間戳記 -1.5 秒**
+        if (firstTimestamp !== null && player && typeof player.seekTo === "function") {
+            let targetTime = Math.max(0, firstTimestamp - 1.5);
+            player.seekTo(targetTime, true);
+        }
     }
 }
+
+// **找到該行第一個字的時間戳記**
+function findFirstTimestampOfCurrentLine() {
+    for (let i = 0; i < timestamps.length; i++) {
+        if (timestamps[i].line === currentLineIndex + 1) {
+            return parseTimeToSeconds(timestamps[i].start); // **返回該行第一個字的時間**
+        }
+    }
+    return null;
+}
+
+// **解析時間格式（mm:ss:ms）轉換為秒數**
+function parseTimeToSeconds(timeString) {
+    let parts = timeString.split(":");
+    if (parts.length === 3) {
+        let minutes = parseInt(parts[0], 10);
+        let seconds = parseInt(parts[1], 10);
+        let milliseconds = parseInt(parts[2], 10);
+        return minutes * 60 + seconds + milliseconds / 100;
+    }
+    return null;
+}
+
 function nextChar() {
     if (currentWordIndex < lyrics[currentLineIndex].length) {
         addButtonEffect("nextCharBtn");
@@ -271,19 +303,31 @@ function nextChar() {
     }
     updateProgressBar();
 }
+
+
 function prevLine() {
     if (currentLineIndex > 0) {
         addButtonEffect("prevLineBtn");
-        // 刪除當前行和上一行的所有時間紀錄
+
+        // **1️⃣ 先抓取上一句（currentLineIndex - 1）的第一個字的時間戳記**
+        let firstTimestamp = findFirstTimestampOfLine(currentLineIndex - 1);
+
+        // **2️⃣ 設定 YouTube 播放器時間為 該時間戳記 -1 秒**
+        if (firstTimestamp !== null && player && typeof player.seekTo === "function") {
+            let targetTime = Math.max(0, firstTimestamp - 1); // 🔥 這裡可以調整秒數
+            player.seekTo(targetTime, true);
+        }
+
+        // **3️⃣ 刪除本行及上一行的所有時間戳記**
         timestamps = timestamps.filter(t => t.line !== currentLineIndex + 1 && t.line !== currentLineIndex);
 
-        // 移動到上一行
+        // **4️⃣ 移動到上一行並更新顯示**
         currentLineIndex--;
         currentWordIndex = 0;
         displayLyrics();
         updateTimestampsDisplay();
     } else {
-        // 如果已經在第一行則清除所有時間紀錄
+        // **如果已經在第一行則不做回溯，只是重置行索引**
         timestamps = [];
         currentLineIndex = 0;
         currentWordIndex = 0;
@@ -291,6 +335,17 @@ function prevLine() {
         updateTimestampsDisplay();
     }
 }
+
+// **找到指定行的第一個字的時間戳記**
+function findFirstTimestampOfLine(lineIndex) {
+    for (let i = 0; i < timestamps.length; i++) {
+        if (timestamps[i].line === lineIndex + 1) { // **找到該行第一個字**
+            return parseTimeToSeconds(timestamps[i].start);
+        }
+    }
+    return null;
+}
+
 function nextLine() {
     if (currentLineIndex < lyrics.length - 1) {
         addButtonEffect("nextLineBtn");
