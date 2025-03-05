@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <title>YouTube KTV 字幕產生器</title>
+    <link rel="stylesheet" href="maker.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🎵 YouTube KTV字幕產生器</h1>
+
+        <div class="top-section">
+            <!-- YouTube 影片與輸入 -->
+            <div class="video-container">
+                <input type="text" id="videoUrl" placeholder="https://www.youtube.com/..." class="url-input">
+                <br>
+                <button class="load-video-btn" onclick="loadVideo()">載入影片</button>
+                <div id="player"></div>
+            </div>
+
+            <!-- 歌詞輸入框 -->
+            <div class="lyrics-input-container">
+                <textarea id="lyricsInput" placeholder="輸入歌詞，每句一行"></textarea>
+                <br>
+                <div class="lyrics-button-container">
+                    <button class="load-lyrics-btn" onclick="loadLyrics()">載入歌詞</button>
+                </div>
+
+                <!-- 逐字時間紀錄 -->
+                <div class="timestamps-container">
+                    <h3>逐字時間紀錄</h3>
+                    <textarea id="timestampsDisplay" readonly></textarea>
+                </div>
+                <div class="download-button-container">
+                    <button onclick="exportTimestamps()">下載時間紀錄</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 歌詞顯示 -->
+        <div id="lyricsContainer">
+            <div id="lyricsDisplay"></div>
+        </div>
+
+        <!-- 控制按鈕 -->
+        <div class="controls">
+            <button id="prevLineBtn" onclick="prevLine()">⭡ 上一句</button>
+            <button id="prevCharBtn" onclick="prevChar()">⭠ 本句重來</button>
+            <button id="nextCharBtn" onclick="nextChar()">⭢ 紀錄本字</button>
+            <button id="nextLineBtn" onclick="nextLine()">⭣ 下一句</button>
+            <button id="resetAllBtn" onclick="resetAll()">全部重來</button>
+        </div>
+    </div>
+
+    <!-- 進度條 -->
+    <div class="progress-container">
+        <div id="progressBar" class="progress-bar"></div>
+    </div>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="maker.js"></script>
+
+</body>
+</html>

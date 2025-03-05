@@ -1,0 +1,249 @@
+/* 🔷 全局樣式 */
+body {
+    font-family: 'Noto Sans', sans-serif;
+    text-align: center;
+    background: #f8f9fa;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 15px;
+    background: white;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 🎥 影片與歌詞輸入區（左右排列） */
+.top-section {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    max-width: 1200px;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+
+.video-container {
+    width: 50%;
+    text-align: left;
+    background: #eef1f4;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.video-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.url-input {
+    max-width: 500px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background: #fff;
+}
+
+.load-video-btn, .load-lyrics-btn {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #a5c1de;
+    color: white;
+    transition: all 0.2s;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.load-video-btn:hover, .load-lyrics-btn:hover {
+    background: #85a7cc;
+}
+
+#player {
+    width: 100%;
+    max-width: 560px;
+    height: 315px;
+    margin-top: 30px;
+    border-radius: 5px;
+}
+
+/* 🎤 KTV 歌詞顯示區 */
+#lyricsContainer {
+    width: 90%;
+    max-width: 800px;
+    min-height: 80px;
+    background: transparent; /* 讓背景完全透明 */
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: none; /* 移除陰影 */
+    border: none; /* 確保沒有邊框 */
+}
+
+#lyricsDisplay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 2px;  /* 減少字元間距 */
+    white-space: pre-wrap;
+    font-size: 35px;
+    font-weight: bold;
+    color: #534e4e;
+    text-shadow: rgba(255, 255, 255, 0.861);
+}
+
+.word {
+    display: inline-block;
+    padding: 5px 8px; /* 讓背景大小更符合字元 */
+    margin: 0 1px; /* 縮小間距 */
+    border-radius: 10px; /* 圓角設計 */
+    background-color: rgba(0, 0, 0, 0.05); /* 半透明背景 */
+    transition: background-color 0.3s ease-in-out; /* 平滑變化 */
+}
+
+.word.highlight {
+    color: #007bff;
+    background-color: rgba(0, 0, 0, 0.1); /* 變色時的半透明效果 */
+    text-shadow: 1px 1px 5px rgba(0, 123, 255, 0.5);
+}
+
+/* 📝 歌詞輸入區 */
+.lyrics-input-container {
+    width: 45%;
+    background: #eef1f4;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+    flex-direction: column;
+}
+
+#lyricsInput {
+    width: 90%;
+    height: 130px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background: #fff;
+    color: #000;
+    resize: none;
+}
+
+
+#timestampsDisplay {
+    width: 90%;
+    height: 130px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #c9c8c835;
+    background: #c9c8c835;
+    color: #000;
+    resize: none;
+}
+
+.lyrics-controls {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.download-button-container {
+    width: 100%;
+    margin-top: 10px;
+    text-align: right;
+}
+
+.download-button-container button {
+    background: #3388ad;
+    color: white;
+    font: bold;
+    font-size: 14px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    transition: 0.2s;
+    border: none;
+    width: 100%;
+    cursor: pointer;
+}
+
+.download-button-container button:hover {
+    background: #2f9ca4;
+}
+
+/* 🎮 控制按鈕區 */
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.controls button {
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    background: #f8f9fa;
+    color: #333;
+    transition: all 0.2s;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.controls button:hover {
+    background: #e2e6ea;
+}
+
+.controls button.active {
+    background: #a3c6ed;
+    color: white;
+    transform: scale(1.02);
+    box-shadow: 0px 3px 6px rgba(148, 168, 190, 0.3);
+}
+
+/* 進度條外框 */
+.progress-container {
+    width: 100vw;
+    max-width: 100%;
+    height: 12px;
+    background: #e0e0e0;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-top: 15px;
+    box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+/* 🔹 進度條本體 */
+.progress-bar {
+    height: 100%;
+    width: 0%; /* 初始為 0% */
+    background: linear-gradient(to right, #007bff4e, #00c8ff3f);
+    border-radius: 6px;
+    transition: width 0.3s ease-in-out;
+}
