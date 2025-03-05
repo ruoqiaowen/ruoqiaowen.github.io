@@ -344,7 +344,7 @@ input[type="color"] {
     white-space: nowrap;
     font-size: inherit; /* 讓它繼承 .lyrics-line 的大小 */
     font-weight: bold;
-    margin-right: 5px;
+    margin-right: 1px;
     transition: font-size 0.2s ease-in-out;
 }
 
