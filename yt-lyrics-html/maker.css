@@ -247,3 +247,92 @@ body {
     border-radius: 0px;
     transition: width 0.3s ease-in-out;
 }
+
+/* 🔹 進度UI顯示歌詞同步狀態 */
+.lyrics-status {
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    background: rgba(200, 220, 255, 0.2);
+    text-align: center;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* 🟢 當行已完成時進度UI變色 */
+.lyrics-status.complete {
+    background: rgba(100, 200, 100, 0.2);
+    color: #007b00;
+}
+
+/* 🔥 煙火容器 */
+#fireworks-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+/* 🎆 煙火核心 */
+.firework {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: #ffcc00;
+    border-radius: 50%;
+    opacity: 1;
+    animation: explode 1.2s ease-out forwards;
+}
+
+/* 💥 煙火爆炸的粒子 */
+.particle {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background-color: white;
+    border-radius: 50%;
+    opacity: 1;
+    animation: particle-explode 1.2s ease-out forwards;
+}
+
+/* ✨ 煙火核心爆炸動畫 */
+@keyframes explode {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 1; transform: scale(3); }
+    100% { opacity: 0; transform: scale(5); }
+}
+
+/* 🌟 煙火粒子爆炸動畫 */
+@keyframes particle-explode {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(var(--x), var(--y)) scale(0.5);
+    }
+}
+
+/* 🔥 煙火模式的黑色半透明背景 */
+#fireworks-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0); /* 初始透明 */
+    z-index: 9998; /* 比煙火稍低，確保煙火在上面 */
+    transition: background 1s ease-in-out;
+    pointer-events: none; /* 避免影響操作 */
+}
+
+/* 🌙 當煙火啟動時的黑色背景 */
+#fireworks-overlay.active {
+    background: rgba(0, 0, 0, 0.6); /* 60% 黑色半透明 */
+}

@@ -32,6 +32,9 @@
                     <h3>逐字時間紀錄</h3>
                     <textarea id="timestampsDisplay" readonly></textarea>
                 </div>
+                <div id="lyricsStatus" class="lyrics-status">
+                    <span id="currentLineStatus">尚未載入歌詞</span>
+                </div>
                 <div class="download-button-container">
                     <button onclick="exportTimestamps()">下載時間紀錄</button>
                 </div>
@@ -60,6 +63,10 @@
 
     <script src="https://www.youtube.com/iframe_api"></script>
     <script src="maker.js"></script>
+
+    <!-- 完成時放煙火 -->
+    <div id="fireworks-container"></div>
+    <div id="fireworks-overlay"></div>
 
 </body>
 </html>
