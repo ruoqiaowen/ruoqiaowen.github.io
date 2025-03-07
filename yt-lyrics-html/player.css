@@ -25,6 +25,23 @@ h1 {
     margin-bottom: 20px;
 }
 
+/* 副標題 */
+.subtitle {
+    font-size: 12px;
+    color: #666; /* 淺灰色 */
+    margin-top: -16px; /* 微調位置，讓它靠近標題 */
+    font-style: italic; /* 斜體，使其不搶眼 */
+}
+/* Github 連結 */
+.github-link {
+    color: #007bff; /* 藍色，符合超連結風格 */
+    text-decoration: none; /* 移除底線 */
+    font-weight: bold;
+}
+.github-link:hover {
+    text-decoration: underline; /* 滑鼠懸停時顯示底線 */
+}
+
 /* 🎨 個人化設定區 */
 #customizationContainer {
     display: flex;
@@ -127,7 +144,7 @@ input[type="color"] {
 }
 @font-face {
     font-family: 'ZenOldMincho';
-    src: url('fonts/ZenOldMincho-Bold.ttf') format('truetype');
+    src: url('fonts/ZenOldMincho-Black.ttf') format('truetype');
 }
 @font-face {
     font-family: 'NotoSerifKR';
@@ -139,7 +156,7 @@ input[type="color"] {
 }
 @font-face {
     font-family: 'NanumGothic';
-    src: url('fonts/NanumGothic-Bold.tff') format('truetype');
+    src: url('fonts/NanumGothic-Bold.ttf') format('truetype');
 }
 @font-face {
     font-family: 'ZenKakuGothicNew';
@@ -149,6 +166,91 @@ input[type="color"] {
     font-family: 'MPLUS1';
     src: url('fonts/MPLUS1p-Bold.ttf') format('truetype');
 }
+@font-face {
+    font-family: 'GowunBatang';
+    src: url('fonts/GowunBatang-Bold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Iansui';
+    src: url('fonts/Iansui-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'ChiayiCityFont';
+    src: url('fonts/ChiayiCity.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'KaiseiDecol';
+    src: url('fonts/KaiseiDecol-Bold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'KaiseiHarunoUmi';
+    src: url('fonts/KaiseiHarunoUmi-Bold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'KaiseiTokumin';
+    src: url('fonts/KaiseiTokumin-ExtraBold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'KiwiMaru';
+    src: url('fonts/KiwiMaru-Medium.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'KleeOne';
+    src: url('fonts/KleeOne-SemiBold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'ZenMaruGothic';
+    src: url('fonts/ZenMaruGothic-Bold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'BlackAndWhitePicture';
+    src: url('fonts/BlackAndWhitePicture-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Diphylleia';
+    src: url('fonts/Diphylleia-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'DoHyeon';
+    src: url('fonts/DoHyeon-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Dongle';
+    src: url('fonts/Dongle-Bold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'GamjaFlower';
+    src: url('fonts/GamjaFlower-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Jua';
+    src: url('fonts/Jua-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'NanumBrushScript';
+    src: url('fonts/NanumBrushScript-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Stylish';
+    src: url('fonts/Stylish-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Sunflower';
+    src: url('fonts/Sunflower-Bold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'GenRyuMin';
+    src: url('fonts/GenRyuMin2TW-B.otf') format('truetype');
+}
+@font-face {
+    font-family: 'GenSekiGothic';
+    src: url('fonts/GenSekiGothic2TW-B.otf') format('truetype');
+}
+@font-face {
+    font-family: 'GenSenRounded';
+    src: url('fonts/GenSenRounded2TW-B.otf') format('truetype');
+}
+
 
 
 /* 預設 KTV 字幕字型 */
@@ -216,7 +318,7 @@ input[type="color"] {
 /* 🔘 全螢幕 & 遮罩按鈕樣式 */
 #customFullscreenBtn,
 #toggleMaskBtn {
-    position: absolute;
+    position: fixed;
     right: 20px;
     padding: 8px 12px;
     font-size: 14px;

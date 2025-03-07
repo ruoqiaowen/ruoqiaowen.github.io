@@ -112,17 +112,27 @@ function onYouTubeIframeAPIReady() {
 }
 
 // 遮罩相關變數
-let isMaskVisible = false;
+let isMaskVisible = false;  // 當前遮罩是否顯示
+let isMaskPersistent = 0;  // ✅ 記錄遮罩是否應該自動開啟 (0: 關閉, 1: 開啟)
 let maskBtnTimeout;
+let hideMaskTimeout; // 用於延遲恢復遮罩的計時器
 
 // 遮罩按鈕 & 遮罩層
 let maskBtn = document.getElementById("toggleMaskBtn");
 let videoMask = document.getElementById("videoMask");
+let ytPlayerContainer = document.getElementById("player-container"); // 取得 YouTube 播放器容器
 
-// 📌 監聽全螢幕變化，顯示/隱藏遮罩按鈕
+// 📌 監聽全螢幕變化，顯示/隱藏遮罩按鈕 & 恢復遮罩狀態
 document.addEventListener("fullscreenchange", function () {
     if (document.fullscreenElement) {
         maskBtn.classList.remove("hidden"); // 顯示遮罩按鈕
+
+        // ✅ 如果之前開啟過遮罩，進入全螢幕時自動開啟
+        if (isMaskPersistent === 1) {
+            videoMask.classList.remove("hidden");
+            maskBtn.textContent = "關閉遮罩";
+            isMaskVisible = true;
+        }
     } else {
         maskBtn.classList.add("hidden"); // 退出全螢幕時隱藏按鈕
         videoMask.classList.add("hidden"); // 確保遮罩關閉
@@ -134,12 +144,15 @@ document.addEventListener("fullscreenchange", function () {
 // 📌 按下 "開啟遮罩" 按鈕時，切換遮罩顯示
 maskBtn.addEventListener("click", function () {
     isMaskVisible = !isMaskVisible;
+    
     if (isMaskVisible) {
         videoMask.classList.remove("hidden");
         maskBtn.textContent = "關閉遮罩";
+        isMaskPersistent = 1; // ✅ 記住遮罩開啟狀態
     } else {
         videoMask.classList.add("hidden");
         maskBtn.textContent = "開啟遮罩";
+        isMaskPersistent = 0; // ✅ 記住遮罩關閉狀態
     }
 });
 
@@ -154,6 +167,29 @@ maskBtn.addEventListener("mouseleave", function () {
         maskBtnTimeout = setTimeout(() => {
             maskBtn.classList.add("hidden-btn");
         }, 3000);
+    }
+});
+
+// 📌 監聽滑鼠是否移動到播放器進度條，讓遮罩透明
+ytPlayerContainer.addEventListener("mousemove", function (event) {
+    if (isMaskVisible) {
+        let playerRect = ytPlayerContainer.getBoundingClientRect();
+        let cursorY = event.clientY;
+
+        // 如果滑鼠進入播放器下方 60px（調整播放範圍），則讓遮罩透明
+        if (cursorY > playerRect.bottom - 60) {
+            videoMask.style.opacity = "0";
+            videoMask.style.transition = "opacity 0.3s ease-in-out"; // ✅ 添加淡化動畫
+            clearTimeout(hideMaskTimeout); // 清除之前的計時
+        } else {
+            // 如果滑鼠離開進度條範圍，1.5 秒後恢復遮罩
+            hideMaskTimeout = setTimeout(() => {
+                if (isMaskVisible) {
+                    videoMask.style.opacity = "1"; // 恢復遮罩
+                    videoMask.style.transition = "opacity 0.5s ease-in-out"; // ✅ 添加淡化動畫
+                }
+            }, 1500);
+        }
     }
 });
 
@@ -221,7 +257,7 @@ function loadSubtitleFile() {
 
 function parseSubtitleFormat(text) {
     // **拆分成行，保留行內空格**
-    const lines = text.split("\n").filter(line => line !== ""); 
+    const lines = text.split("\n").filter(line => line.trim() !== "");
 
     if (lines.length < 3) {
         alert("❌ 字幕檔案格式錯誤！");
@@ -243,20 +279,54 @@ function parseSubtitleFormat(text) {
     }
 
     subtitleData = [];
+    let previousEndTime = 0; // 記錄上一個字的結束時間
+    let previousLine = 0; // 記錄上一個行的編號
 
     subtitleLines.forEach((line, index) => {
-        // **解析但不影響空格**
-        const match = line.match(/Line (\d+) \| Word (\d+) \| (\d{2}:\d{2}:\d{2}) → (\d{2}:\d{2}:\d{2}) \| (.+)/);
+        // **解析字幕行**
+        const match = line.match(/Line (\d+) \| Word (\d+) \| (\d{2}):(\d{2}):(\d{2}) → (\d{2}):(\d{2}):(\d{2}) \| (.+)/);
         if (match) {
-            let wordText = match[5]; // **直接從 match 取得字串，保持原始空格**
-            
+            let lineNumber = parseInt(match[1]); // 目前的行數
+            let wordIndex = parseInt(match[2]); // 目前的單字索引
+            let startTime = timeToSeconds(`${match[3]}:${match[4]}:${match[5]}`);
+            let endTime = timeToSeconds(`${match[6]}:${match[7]}:${match[8]}`);
+            let wordText = match[9].replace(/ /g, "␣").replace(/　/g, "␣␣"); // 保留空格
+
+            // **檢查是否需要插入圓圈**
+            if ((lineNumber !== previousLine && startTime - previousEndTime > 4) || (index === 0 && startTime >= 4)) {
+                let circleStartTime = Math.max(startTime - 3, 0); // 防止負數時間
+                let circleEndTime = startTime;
+
+                // 插入圓圈作為該行的第一個單詞
+                subtitleData.push({
+                    line: lineNumber,
+                    wordIndex: 1, // 圓圈永遠是該行的第一個字
+                    startTime: circleStartTime,
+                    endTime: circleEndTime,
+                    word: "•••"
+                });
+                subtitleData.push({
+                    line: lineNumber,
+                    wordIndex: 2, // 圓圈永遠是該行的第一個字
+                    startTime: circleEndTime,
+                    endTime: circleEndTime,
+                    word: "&nbsp;"
+                });
+
+                wordIndex += 2; // 讓原始行的第一個字變成 `Word 2`
+            }
+
+            // **添加原始字幕**
             subtitleData.push({
-                line: parseInt(match[1]),
-                wordIndex: parseInt(match[2]),
-                startTime: timeToSeconds(match[3]),
-                endTime: timeToSeconds(match[4]),
-                word: wordText.replace(/ /g, "␣").replace(/　/g, "␣␣") // 將空格標記起來待後續轉換
+                line: lineNumber,
+                wordIndex: wordIndex,
+                startTime: startTime,
+                endTime: endTime,
+                word: wordText
             });
+
+            previousEndTime = endTime; // 更新上一個字的結束時間
+            previousLine = lineNumber; // 更新上一個行的編號
         }
     });
 
@@ -265,6 +335,7 @@ function parseSubtitleFormat(text) {
         return;
     }
 
+    console.log("✅ 處理後的字幕數據：", subtitleData);
 }
 
 // ⏲ 轉換時間格式 (00:18:98 → 秒數)
@@ -296,6 +367,9 @@ function toggleCustomFullScreen() {
             // 設定 3 秒後讓按鈕透明
             hideFullscreenTimeout = setTimeout(() => {
                 fullscreenBtn.classList.add("hide-fullscreen-btn");
+            }, 3000);
+            maskBtnTimeout = setTimeout(() => {
+                maskBtn.classList.add("hidden-btn");
             }, 3000);
         }).catch(err => {
             console.error("🔴 無法進入全螢幕模式:", err);
@@ -433,7 +507,9 @@ function updateLyricsDisplay(currentTime) {
         highlightText.style.textShadow = `2px 2px 5px ${highlightShadowColor}`;
 
         if (progress < 1) {
-            requestAnimationFrame(() => animateWordHighlight(entry, highlightText, player.getCurrentTime()));
+            setTimeout(() => {
+                requestAnimationFrame(() => animateWordHighlight(entry, highlightText, player.getCurrentTime()));
+            }, 20); // 降低頻率，每 20ms 更新一次
         }
     }
 
@@ -465,3 +541,4 @@ function updateLyricsDisplay(currentTime) {
         currentEvenLineIndex += 2;
     }
 }
+
