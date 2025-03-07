@@ -8,8 +8,12 @@
 </head>
 <body>
     <div class="container">
-        <h1>🎵 YouTube KTV字幕產生器</h1>
-
+        <h1>♫ YouTube KTV字幕產生器</h1>
+        <p class="subtitle">
+            Developed by ruoqiaowen in May, 2025. 
+            <a href="https://github.com/ruoqiaowen/ruoqiaowen.github.io" target="_blank" class="github-link">[Github]</a>
+        </p>
+        <br>
         <div class="top-section">
             <!-- YouTube 影片與輸入 -->
             <div class="video-container">
@@ -29,8 +33,23 @@
 
                 <!-- 逐字時間紀錄 -->
                 <div class="timestamps-container">
-                    <h3>逐字時間紀錄</h3>
-                    <textarea id="timestampsDisplay" readonly></textarea>
+                    <div class="timestamps-container">
+                        <div class="divider"></div>
+                        <div class="table-wrapper">
+                            <table id="timestampsTable">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>第～行</th>
+                                        <th>第～字</th>
+                                        <th>開始於</th>
+                                        <th>結束於</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody> <!-- 這裡會由 JS 動態填入數據 -->
+                            </table>
+                        </div>
+                    </div>
                 </div>
                 <div id="lyricsStatus" class="lyrics-status">
                     <span id="currentLineStatus">尚未載入歌詞</span>

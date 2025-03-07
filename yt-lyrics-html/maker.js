@@ -120,10 +120,30 @@ function addSlashesToWords(line) {
     let result = "";
     let len = line.length;
     let thirdSymbolCount = 0; // 記錄 `"` 出現次數
+    let inBracket = false; // 是否進入 `[` `]` 標註模式
 
     for (let i = 0; i < len; i++) {
         let char = line[i];
         let nextChar = line[i + 1] || ""; // 下一個字元，若無則為空字串
+
+        // **標註模式開始**
+        if (char === "[") {
+            inBracket = true; // 開啟標註模式
+            continue; // 跳過 `[`，不加入 `result`
+        }
+
+        // **標註模式結束**
+        if (char === "]") {
+            inBracket = false; // 關閉標註模式
+            result += "/"; // `]` 轉為 `/`
+            continue;
+        }
+
+        // **如果在標註模式內，直接加入字元，不進行自動分割**
+        if (inBracket) {
+            result += char;
+            continue;
+        }
 
         result += char; // 先加當前字元
 
@@ -213,7 +233,6 @@ function addSlashesToWords(line) {
             }
             continue;
         }
-        
     }
 
     return result;
@@ -505,14 +524,34 @@ function updateTimestampsDisplay() {
         `Line ${t.line} | Word ${t.wordIndex} | ${t.start} → ${t.end} | ${t.word}`
     ).join("\n");
 
-    displayArea.value = formattedText;
-
-    // 自動捲動到最後一行
-    displayArea.scrollTop = displayArea.scrollHeight;
+    updateTimestampsTable();
 
     updateProgressBar();
     updateLyricsStatus();
     lastTimestampsUpdate = Date.now();
+}
+
+function updateTimestampsTable() {
+    let tableBody = document.querySelector("#timestampsTable tbody");
+    tableBody.innerHTML = ""; // 清空舊的表格內容
+
+    timestamps.forEach(t => {
+        let row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${t.word}</td>
+            <td>${t.line}</td>
+            <td>${t.wordIndex}</td>
+            <td>${t.start || "--:--:--"}</td>
+            <td>${t.end || "--:--:--"}</td>
+        `;
+
+        tableBody.appendChild(row);
+    });
+
+    // 🔥 自動滾動到最新的紀錄
+    let tableWrapper = document.querySelector(".table-wrapper");
+    tableWrapper.scrollTop = tableWrapper.scrollHeight;
 }
 
 function updateProgressBar() {
