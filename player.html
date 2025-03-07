@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <title>YouTube KTV 字幕播放器</title>
+    <link rel="stylesheet" href="player.css"> <!-- 連結 CSS -->
+</head>
+<body>
+    <div class="container">
+        <h1>🎤 YouTube KTV字幕播放器</h1>
+        <p class="subtitle">
+            Developed by ruoqiaowen in March, 2025. 
+            <a href="https://github.com/ruoqiaowen/ruoqiaowen.github.io" target="_blank" class="github-link">[Github]</a>
+        </p>
+        <br>
+
+        <!-- 影片網址輸入區 -->
+        <div class="video-input-container">
+            <!-- 字幕檔案上傳 -->
+            <button onclick="document.getElementById('subtitleFile').click()">上傳字幕檔</button>
+            <input type="file" id="subtitleFile" accept=".txt" hidden>
+            <span id="fileName">尚未選擇任何檔案</span>
+            <button onclick="loadSubtitleFile()">載入字幕檔</button>
+        </div>
+        
+        <!-- 影片播放器 -->
+        <div id="player-container">
+            <div id="player"></div>
+            <button id="customFullscreenBtn">全螢幕播放</button>
+            <button id="toggleMaskBtn" class="hidden">開啟遮罩</button>
+
+            <!-- 遮罩層 -->
+            <div id="videoMask" class="hidden"></div>
+        </div>
+
+        <!-- KTV 字幕動畫顯示區 -->
+        <div id="lyricsContainer">
+            <div id="lyricsDisplay"></div>
+        </div>
+    </div>
+
+    <div id="customizationContainer">
+        <div class="customization-group">
+            <label for="fontSelector">選擇字體</label>
+            <select id="fontSelector">
+                <option value="NotoSans">Default</option>
+                <option value="Huninn">Open粉圓 Huninn</option>
+                <option value="ChenYuluoyan">辰宇落雁體</option>
+                <option value="GenRyuMin">源流明體</option>
+                <option value="GenSekiGothic">源石黑體</option>
+                <option value="GenSenRounded">源泉圓體</option>
+                <option value="Iansui">芫荽 Iansui</option>
+                <option value="ChiayiCityFont">嘉市體 ChiayiCityFont</option>
+                <option value="ZenKakuGothicNew">🇯🇵 ZenKakuGothicNew</option>
+                <option value="ZenOldMincho">🇯🇵 ZenOldMincho</option>
+                <option value="ZenMaruGothic">🇯🇵 ZenMaruGothic</option>
+                <option value="MPLUS1">🇯🇵 MPLUS1</option>
+                <option value="KaiseiDecol">🇯🇵 KaiseiDecol</option>
+                <option value="KaiseiHarunoUmi">🇯🇵 KaiseiHarunoUmi</option>
+                <option value="KaiseiTokumin">🇯🇵 KaiseiTokumin</option>
+                <option value="KiwiMaru">🇯🇵 KiwiMaru</option>
+                <option value="KleeOne">🇯🇵 KleeOne</option>
+                <option value="NotoSerifKR">🇰🇷 NotoSerifKR</option>
+                <option value="NanumGothic">🇰🇷 NanumGothic</option>
+                <option value="NanumBrushScript">🇰🇷 NanumBrushScript</option>
+                <option value="NanumPenScript">🇰🇷 NanumPenScript</option>
+                <option value="GowunBatang">🇰🇷 GowunBatang</option>
+                <option value="BlackAndWhitePicture">🇰🇷 BlackAndWhitePicture</option>
+                <option value="Diphylleia">🇰🇷 Diphylleia</option>
+                <option value="DoHyeon">🇰🇷 DoHyeon</option>
+                <option value="Dongle">🇰🇷 Dongle</option>
+                <option value="GamjaFlower">🇰🇷 GamjaFlower</option>
+                <option value="Sunflower">🇰🇷 Sunflower</option>
+                <option value="Stylish">🇰🇷 Stylish</option>
+                <option value="Jua">🇰🇷 Jua</option>
+            </select>
+        </div>
+    
+        <div class="customization-group">
+            <label for="fontSizeSlider">字體大小</label>
+            <input type="range" id="fontSizeSlider" min="20" max="80" value="40">
+            <span id="fontSizeValue">30px</span>
+        </div>
+
+        <div class="customization-group">
+            <label for="subtitleOffset">字幕時間</label>
+            <input type="range" id="subtitleOffset" min="-1" max="1" step="0.05" value="0">
+            <span id="subtitleOffsetValue">未微調</span>
+        </div>
+        
+        <div class="customization-group">
+            <label for="highlightTextColor">變化顏色</label>
+            <input type="color" id="highlightTextColor" value="#80D9E5">
+    
+            <label for="highlightShadowColor">陰影顏色</label>
+            <input type="color" id="highlightShadowColor" value="#1D1B1B">
+        </div>
+
+    </div>
+
+    <script src="https://www.youtube.com/iframe_api"></script> <!-- YouTube API -->
+    <script src="player.js"></script> <!-- 連結 JS -->
+</body>
+</html>

@@ -1,0 +1,471 @@
+/* 全局設定 */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* 主要容器 */
+.container {
+    width: 80%;
+    max-width: 1000px;
+    margin: 20px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 🏷 標題 */
+h1 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* 副標題 */
+.subtitle {
+    font-size: 12px;
+    color: #666; /* 淺灰色 */
+    margin-top: -16px; /* 微調位置，讓它靠近標題 */
+    font-style: italic; /* 斜體，使其不搶眼 */
+}
+/* Github 連結 */
+.github-link {
+    color: #007bff; /* 藍色，符合超連結風格 */
+    text-decoration: none; /* 移除底線 */
+    font-weight: bold;
+}
+.github-link:hover {
+    text-decoration: underline; /* 滑鼠懸停時顯示底線 */
+}
+
+/* 🎨 個人化設定區 */
+#customizationContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 10px; /* 縮小與歌詞區的間距 */
+    padding: 15px;
+    background-color: transparent; /* 讓背景完全透明 */
+    border-radius: 0; /* 移除圓角，讓它貼合背景 */
+    box-shadow: none; /* 移除陰影，防止邊界感 */
+    font-size: 13px;
+}
+
+/* 🎛 各組設定區 */
+.customization-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.8); /* 讓內部區塊還有一點淡淡的區隔感 */
+    padding: 8px 12px;
+    border-radius: 8px;
+    box-shadow: none; /* 讓內部元素不再有陰影 */
+    font-size: 13px;
+}
+
+/* 🔤 字體選擇 */
+#fontSelector {
+    padding: 6px 10px;
+    font-size: 13px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: white;
+    cursor: pointer;
+}
+
+/* 🔠 字體大小滑桿 & 字幕微調滑桿 */
+input[type="range"] {
+    width: 120px;
+    cursor: pointer;
+    accent-color: #4A90E2; /* ✅ 滑桿顏色變淺藍 */
+    background: #CCCCCC; /* ✅ 滑桿底色變灰色 */
+    border-radius: 5px;
+    height: 6px;
+    outline: none;
+    appearance: none;
+}
+
+/* 🎛 反轉滑桿的視覺方向 */
+#subtitleOffset {
+    transform: scaleX(-1); /* ✅ 讓滑桿視覺上反向 */
+}
+
+/* 🎛 讓滑桿的拖動點維持正常 */
+#subtitleOffset::-webkit-slider-thumb {
+    transform: scaleX(-1); /* ✅ 讓 thumb (拖動點) 不受影響 */
+}
+
+#subtitleOffset::-moz-range-thumb {
+    transform: scaleX(-1); /* ✅ Firefox 也適用 */
+}
+
+/* 🎨 滑桿的「可拖動圓點」 */
+input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: #4A90E2; /* ✅ 讓滑桿圓點是淺藍色 */
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background: #4A90E2;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* 🎨 顏色選擇器 */
+input[type="color"] {
+    width: 30px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+    background: none;
+    padding: 0;
+}
+
+/* 載入字型 */
+@font-face {
+    font-family: 'Huninn';
+    src: url('fonts/jf-openhuninn-1.0.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'ChenYuluoyan';
+    src: url('fonts/ChenYuluoyan-Thin.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'ZenOldMincho';
+    src: url('fonts/ZenOldMincho-Black.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'NotoSerifKR';
+    src: url('fonts/NotoSerifKR-ExtraBold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'NanumPenScript';
+    src: url('fonts/NanumPenScript-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'NanumGothic';
+    src: url('fonts/NanumGothic-Bold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'ZenKakuGothicNew';
+    src: url('fonts/ZenKakuGothicNew-Black.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'MPLUS1';
+    src: url('fonts/MPLUS1p-Bold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'GowunBatang';
+    src: url('fonts/GowunBatang-Bold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Iansui';
+    src: url('fonts/Iansui-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'ChiayiCityFont';
+    src: url('fonts/ChiayiCity.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'KaiseiDecol';
+    src: url('fonts/KaiseiDecol-Bold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'KaiseiHarunoUmi';
+    src: url('fonts/KaiseiHarunoUmi-Bold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'KaiseiTokumin';
+    src: url('fonts/KaiseiTokumin-ExtraBold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'KiwiMaru';
+    src: url('fonts/KiwiMaru-Medium.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'KleeOne';
+    src: url('fonts/KleeOne-SemiBold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'ZenMaruGothic';
+    src: url('fonts/ZenMaruGothic-Bold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'BlackAndWhitePicture';
+    src: url('fonts/BlackAndWhitePicture-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Diphylleia';
+    src: url('fonts/Diphylleia-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'DoHyeon';
+    src: url('fonts/DoHyeon-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Dongle';
+    src: url('fonts/Dongle-Bold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'GamjaFlower';
+    src: url('fonts/GamjaFlower-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Jua';
+    src: url('fonts/Jua-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'NanumBrushScript';
+    src: url('fonts/NanumBrushScript-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Stylish';
+    src: url('fonts/Stylish-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Sunflower';
+    src: url('fonts/Sunflower-Bold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'GenRyuMin';
+    src: url('fonts/GenRyuMin2TW-B.otf') format('truetype');
+}
+@font-face {
+    font-family: 'GenSekiGothic';
+    src: url('fonts/GenSekiGothic2TW-B.otf') format('truetype');
+}
+@font-face {
+    font-family: 'GenSenRounded';
+    src: url('fonts/GenSenRounded2TW-B.otf') format('truetype');
+}
+
+
+
+/* 預設 KTV 字幕字型 */
+#lyricsDisplay {
+    font-family: 'NotoSans', sans-serif; /* 預設字型 */
+    font-size: 40px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 5px black;
+    white-space: nowrap;
+}
+
+/* 影片輸入區 */
+.video-input-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+    font-size: 13px;
+}
+
+.video-input-container button {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: none;
+    background-color: #f5f5f5;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.video-input-container button:hover {
+    background-color: #ddd;
+}
+
+/* 影片播放器 */
+#player-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* 遮罩層 */
+#videoMask {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 40vh; /* 40% 螢幕高度 */
+    background: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, 
+                                       rgba(0, 0, 0, 0.7) 50%, 
+                                       rgba(0, 0, 0, 0.4) 80%, 
+                                       rgba(0, 0, 0, 0) 100%);
+    z-index: 1050; /* 介於播放器和字幕之間 */
+    pointer-events: none; /* 不影響點擊 */
+}
+
+/* 隱藏元素 */
+.hidden {
+    display: none;
+}
+
+/* 🔘 全螢幕 & 遮罩按鈕樣式 */
+#customFullscreenBtn,
+#toggleMaskBtn {
+    position: fixed;
+    right: 20px;
+    padding: 8px 12px;
+    font-size: 14px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 2000;
+    transition: opacity 0.5s ease-in-out, background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+/* 🎯 按鈕位置：遮罩按鈕在全螢幕按鈕的上方 */
+#customFullscreenBtn {
+    bottom: 20px;
+}
+
+#toggleMaskBtn {
+    bottom: 60px;
+}
+
+/* 🖱 懸停時顯示按鈕 */
+#customFullscreenBtn:hover,
+#toggleMaskBtn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+}
+
+/* ⏳ 3 秒沒 hover，按鈕自動隱藏 */
+.hidden-btn {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* 滑鼠懸停時恢復顯示 */
+#customFullscreenBtn:hover {
+    opacity: 1 !important;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+}
+
+/* 🔵 進入全螢幕後 3 秒，按鈕完全透明 */
+.fullscreen .hide-fullscreen-btn {
+    opacity: 0; /* 完全透明 */
+}
+
+/* 🔵 滑鼠移動到按鈕時，恢復顯示 */
+.fullscreen #customFullscreenBtn:hover {
+    opacity: 1;
+}
+
+/* KTV 字幕區 */
+#lyricsContainer {
+    width: 80%;
+    min-height: 120px;
+    margin: 20px auto;
+    background-color: rgb(204, 214, 221);
+    padding: 15px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* 讓 YouTube 影片 + 字幕區一起進入全螢幕 */
+.fullscreen #player-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 讓 YouTube 播放器填滿畫面 */
+.fullscreen iframe {
+    width: 100%;
+    height: 100%;
+}
+
+/* 讓 KTV 字幕區浮在上層 */
+.fullscreen #lyricsContainer {
+    position: fixed;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    background: rgba(0, 0, 0, 0); /* 全透明 */
+    text-align: center;
+    z-index: 1100; /* 確保比 YouTube 影片還高 */
+    font-size: 45px;
+    font-weight: bold;
+    text-shadow: 2px 2px 8px black;
+}
+
+/* 字幕顯示區 */
+#lyricsDisplay {
+    font-size: 30px; /* 預設大小 */
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 5px black;
+    white-space: nowrap;
+    transition: font-size 0.2s ease-in-out;
+}
+
+/* 字幕行距 */
+.lyrics-line {
+    display: block; 
+    text-align: center;
+    font-size: inherit; /* 讓它繼承 #lyricsDisplay 的大小 */
+    font-weight: bold;
+    margin: 5px 0;
+    transition: font-size 0.2s ease-in-out;
+}
+
+/* 逐字變色效果 */
+.word {
+    position: relative;
+    display: inline-block;
+    white-space: nowrap;
+    font-size: inherit; /* 讓它繼承 .lyrics-line 的大小 */
+    font-weight: bold;
+    margin-right: 1px;
+    transition: font-size 0.2s ease-in-out;
+}
+
+/* 底層文字（白字黑陰影） */
+.base-text {
+    color: white;
+    text-shadow: 2px 2px 5px rgb(37, 36, 45);
+    font-size: inherit; /* 讓它繼承 .word 的大小 */
+    transition: font-size 0.2s ease-in-out;
+}
+
+/* 🔵 變色的字（動畫層） */
+.highlight-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.05s linear, color 0.3s, text-shadow 0.3s, font-size 0.2s ease-in-out;
+    font-size: inherit; /* 讓它繼承 .word 的大小 */
+}
